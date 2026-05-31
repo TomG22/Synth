@@ -26,10 +26,7 @@ void AudioEngine::callback(ma_device* pDevice, void* pOutput, const void* pInput
             // Skip inactive voices
             if (!voice.m_isActive) continue;
 
-            printf("Active: %zu\n", voice.m_currFrame);
-
             mixedSample += voice.genSample();
-            printf("Sample: %f\n", mixedSample);
         }
 
         // Prevent clipping

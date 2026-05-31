@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(Synth)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+
+# Exposes compilation database to LSPs / linters / analysis tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES OFF)
+
+
+add_executable(${PROJECT_NAME}
+    src/main.cpp
+    src/Synth.cpp
+    src/AudioEngine.cpp
+    src/Voice.cpp
+)
+
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+    include
+    dependencies/miniaudio
+)

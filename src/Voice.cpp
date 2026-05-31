@@ -20,7 +20,6 @@ float Voice::genSample() {
     if (m_isPlaying) {
         // This is where the base generator would be used.
         // We're just going to use sine for now
-        printf("m_note: %i\n", m_note);
         sample = sin(static_cast<float>(m_currFrame) / m_sampleRate * 2.0f * std::numbers::pi_v<float> * noteToFreq(m_note));
     } else {
         sample = sin(static_cast<float>(m_currFrame) / m_sampleRate * 2.0f * std::numbers::pi_v<float> * noteToFreq(m_note));

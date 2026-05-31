@@ -15,7 +15,6 @@ int main() {
     Synth synth = Synth(ae);
 
     // Dummy controller loop used to trigger inputs to the synth
-    printf("ADSR Synth\n");
     printf("Press 1-9 + ENTER to trigger/release note\n");
     printf("Press 'q' + ENTER to quit\n\n");
 
