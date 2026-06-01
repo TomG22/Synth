@@ -2,9 +2,9 @@
 #define MA_NO_DECODING
 #define MA_NO_ENCODING
 
-#include "AudioEngine.h"
-
 #include <stdio.h>
+
+#include "AudioEngine.h"
 
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
     auto* self = static_cast<AudioEngine*>(pDevice->pUserData);

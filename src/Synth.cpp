@@ -1,5 +1,6 @@
-#include "Synth.h"
 #include <math.h>
+
+#include "Synth.h"
 
 Synth::Synth(AudioEngine& audioEngine) : m_audioEngine(audioEngine) {}
 
