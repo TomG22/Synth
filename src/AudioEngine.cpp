@@ -60,7 +60,7 @@ Voice& AudioEngine::addVoice(Voice voice) {
     // For now, just replace the first voice
     m_voices[MAX_VOICES - 1] = voice;
 
-    return m_voices[0];
+    return m_voices[MAX_VOICES - 1];
 }
 
 void AudioEngine::callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
