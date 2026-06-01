@@ -58,7 +58,7 @@ Voice& AudioEngine::addVoice(Voice voice) {
 
     // Would implement voice stealing here to replace the longest playing voice
     // For now, just replace the first voice
-    m_voices[0] = voice;
+    m_voices[MAX_VOICES - 1] = voice;
 
     return m_voices[0];
 }
