@@ -3,27 +3,29 @@
 
 Synth::Synth(AudioEngine& audioEngine) : m_audioEngine(audioEngine) {}
 
-void Synth::initSineNote(NoteName note) {
+Voice& Synth::initSineNote(NoteName note) {
     const int SAMPLE_LEN = 48000;
     Voice sineVoice = Voice(note, SAMPLE_LEN, m_audioEngine.m_sampleRate);
-    m_audioEngine.addVoice(sineVoice);
+    Voice& addedVoice = m_audioEngine.addVoice(sineVoice);
+
+    return addedVoice;
 }
 
 void Synth::holdNote(NoteName note) {
-    for (Voice& voice : m_audioEngine.m_voices) {
-        if (voice.m_note == note) {
-            voice.m_isActive = true;
-            voice.m_isPlaying = true;
-            voice.m_currFrame = 0;
-        }
+    Voice* voice;
+    if ((voice = m_audioEngine.getVoice(note))) {
+        voice->m_isActive = true;
+        voice->m_isPlaying = true;
+        voice->m_currFrame = 0;
+    } else {
+        voice = &initSineNote(note);
     }
 }
 
 
 void Synth::releaseNote(NoteName note) {
-    for (Voice& voice : m_audioEngine.m_voices) {
-        if (voice.m_note == note) {
-            voice.m_isPlaying = false;
-        }
+    Voice* voice;
+    if ((voice = m_audioEngine.getVoice(note))) {
+        voice->m_isPlaying = false;
     }
 }

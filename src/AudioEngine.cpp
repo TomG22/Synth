@@ -14,6 +14,55 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
     }
 }
 
+AudioEngine::AudioEngine() {
+    ma_device_config config = ma_device_config_init(ma_device_type_playback);
+
+    config.playback.format   = ma_format_f32;
+    config.playback.channels = 2;
+    config.sampleRate        = 48000;
+    config.dataCallback      = data_callback;
+    config.pUserData = this;
+
+    if (ma_device_init(NULL, &config, &m_device) != MA_SUCCESS) {
+        printf("Failed to open device.\n");
+        exit(1);
+    }
+
+    m_sampleRate = (float)m_device.sampleRate;
+    m_channels   = m_device.playback.channels;
+
+    ma_device_start(&m_device);
+}
+
+AudioEngine::~AudioEngine() {
+    ma_device_uninit(&m_device);
+}
+
+Voice* AudioEngine::getVoice(NoteName note) {
+    for (Voice& voice : m_voices) {
+        if (voice.m_note == note) {
+            return &voice;
+        }
+    }
+
+    return nullptr;
+}
+
+Voice& AudioEngine::addVoice(Voice& voice) {
+    for (size_t i = 0; i < MAX_VOICES; i++) {
+        if (!m_voices[i].m_isActive) {
+            m_voices[i] = voice;
+            return voice;
+        }
+    }
+
+    // Would implement voice stealing here to replace the longest playing voice
+    // For now, just replace the first voice
+    m_voices[0] = voice;
+
+    return voice;
+}
+
 void AudioEngine::callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
     float* out = (float*)pOutput;
     ma_uint32 channels = pDevice->playback.channels;
@@ -40,36 +89,3 @@ void AudioEngine::callback(ma_device* pDevice, void* pOutput, const void* pInput
     (void)pInput;
 }
 
-
-void AudioEngine::addVoice(Voice& voice) {
-    for (size_t i = 0; i < MAX_VOICES; i++) {
-        if (!m_voices[i].m_isActive) {
-            m_voices[i] = voice;
-            break;
-        }
-    }
-}
-
-AudioEngine::AudioEngine() {
-    ma_device_config config = ma_device_config_init(ma_device_type_playback);
-
-    config.playback.format   = ma_format_f32;
-    config.playback.channels = 2;
-    config.sampleRate        = 48000;
-    config.dataCallback      = data_callback;
-    config.pUserData = this;
-
-    if (ma_device_init(NULL, &config, &m_device) != MA_SUCCESS) {
-        printf("Failed to open device.\n");
-        exit(1);
-    }
-
-    m_sampleRate = (float)m_device.sampleRate;
-    m_channels   = m_device.playback.channels;
-
-    ma_device_start(&m_device);
-}
-
-AudioEngine::~AudioEngine() {
-    ma_device_uninit(&m_device);
-}

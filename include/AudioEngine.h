@@ -19,8 +19,9 @@ class AudioEngine {
         AudioEngine();
         ~AudioEngine();
 
+        Voice* getVoice(NoteName note);
+        Voice& addVoice(Voice& voice);
         void callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
-        void addVoice(Voice& voice);
 
     private:
 };

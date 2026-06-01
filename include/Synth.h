@@ -6,7 +6,7 @@ class Synth {
     public:
         Synth(AudioEngine&);
         double noteNameToFreq(NoteName note);
-        void initSineNote(NoteName note);
+        Voice& initSineNote(NoteName note);
         void holdNote(NoteName note);
         void releaseNote(NoteName note);
     private:
