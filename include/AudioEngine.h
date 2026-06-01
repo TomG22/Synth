@@ -20,7 +20,7 @@ class AudioEngine {
         ~AudioEngine();
 
         Voice* getVoice(NoteName note);
-        Voice& addVoice(Voice& voice);
+        Voice& addVoice(Voice voice);
         void callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount);
 
     private:

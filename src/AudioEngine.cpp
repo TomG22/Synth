@@ -48,11 +48,11 @@ Voice* AudioEngine::getVoice(NoteName note) {
     return nullptr;
 }
 
-Voice& AudioEngine::addVoice(Voice& voice) {
+Voice& AudioEngine::addVoice(Voice voice) {
     for (size_t i = 0; i < MAX_VOICES; i++) {
         if (!m_voices[i].m_isActive) {
             m_voices[i] = voice;
-            return voice;
+            return m_voices[i];
         }
     }
 
@@ -60,7 +60,7 @@ Voice& AudioEngine::addVoice(Voice& voice) {
     // For now, just replace the first voice
     m_voices[0] = voice;
 
-    return voice;
+    return m_voices[0];
 }
 
 void AudioEngine::callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
