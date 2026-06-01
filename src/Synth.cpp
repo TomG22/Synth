@@ -19,6 +19,8 @@ void Synth::holdNote(NoteName note) {
         voice->m_currFrame = 0;
     } else {
         voice = &initSineNote(note);
+        voice->m_isActive = true;
+        voice->m_isPlaying = true;
     }
 }
 
