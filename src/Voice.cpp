@@ -11,7 +11,7 @@ float Voice::noteToFreq(NoteName note) {
 
 float Voice::genSample() {
     // Stop the active voice if it's done playing
-    if (m_isActive && m_currFrame >= m_totalFrames) {
+    if (m_currFrame >= m_totalFrames) {
         m_isActive = false;
         return 0.0;
     }
